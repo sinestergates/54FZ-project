@@ -91,30 +91,48 @@ def enter():
     a = Tk()
     ent=Entry(a)
     ent.pack()
-    tovar= ent.get()
-    def check():    
+    tovar=ent.get()
+    entcassir=Entry(a)
+    entcassir.pack()
+    cassir=str(entcassir.get())
+    def check():
+        fptr.setParam(1021, "Кассир Иванов А.")
+        fptr.setParam(1203, "")
+        fptr.operatorLogin()
+        fptr.setParam(1021, cassir)
+        fptr.setParam(1203, "")
+        fptr.operatorLogin()
+
+        fptr.setParam(IFptr.LIBFPTR_PARAM_RECEIPT_TYPE, IFptr.LIBFPTR_RT_SELL)
+        fptr.openReceipt()
         fptr.setParam(IFptr.LIBFPTR_PARAM_COMMODITY_NAME, tovar )
-        fptr.setParam(IFptr.LIBFPTR_PARAM_PRICE, 100)
+        fptr.setParam(IFptr.LIBFPTR_PARAM_PRICE, cassir )
         fptr.setParam(IFptr.LIBFPTR_PARAM_QUANTITY, 5)
         fptr.setParam(IFptr.LIBFPTR_PARAM_TAX_TYPE, IFptr.LIBFPTR_TAX_VAT10)
         fptr.setParam(IFptr.LIBFPTR_PARAM_TAX_SUM, 51.5)
         fptr.registration()
-        print(fptr.errorDescription())
+    def closecheck():
+        fptr.closeReceipt()
+        
     button6 = Button(a, text='чек', width=10, height=5, bg='green', fg='Black', font='arial14',command=check)
-    button6.pack()   
+    button6.pack()
+    button6 = Button(a, text="закрытие\nчека", width=10, height=5, bg='green', fg='Black', font='arial14',command=closecheck)
+    button6.pack()
     a.mainloop()
-    
+
 root = Tk()
-button4 = Button(root, text='параметры чека', width=10, height=5, bg='green', fg='Black', font='arial14', command=enter)
-button4.pack()
-button4 = Button(root, text='х отчет', width=10, height=5, bg='green', fg='Black', font='arial14', command=d)
-button4.pack()
-button1 = Button(root, text='порт', width=10, height=5, bg='green', fg='Black', font='arial14', command=a)
-button1.pack()
-button2 = Button(root, text='информация', width=10, height=5, bg='green', fg='Black', font='arial14', command=e)
-button2.pack()
-button3 = Button(root, text='статус соединения', width=15, height=5, bg='white', fg='Black', font='arial14',command=b)
-button3.pack()
+    
+button4 = Button(root, text='параметры чека', width=10, height=5, bg='green', fg='Black', font='arial14', command=enter).pack()
+
+button4 = Button(root, text='х отчет', width=10, height=5, bg='green', fg='Black', font='arial14', command=d).pack()
+
+button1 = Button(root, text='порт', width=10, height=5, bg='green', fg='Black', font='arial14', command=a).pack()
+
+button2 = Button(root, text='информация', width=10, height=5, bg='green', fg='Black', font='arial14', command=e).pack()
+
+button3 = Button(root, text='статус соединения', width=15, height=5, bg='white', fg='Black', font='arial14',command=b).pack()
+
 com = Entry(root)
 com.pack()
 root.mainloop()
+
